@@ -1,0 +1,21 @@
+{
+  "name": "task-tracker-cli",
+  "version": "1.0.0",
+  "description": "El task Tracker es un proyecto para rastrear y manejar tareas. Construiremos un CLI (Command Line Interface) para hacer un seguimiento las tareas que pendientes, en proceso y las finalizadas.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [
+    "task-tracker"
+  ],
+  "author": "voygha",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^7.0.0"
+  },
+  "dependencies": {
+    "task-tracker-cli": "file:"
+  }
+}
