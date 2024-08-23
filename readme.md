@@ -4,10 +4,74 @@
 
 Este proyecto nos ayudará a practicar nuestras habilidades de programación, incluyendo el manejo del sistema de archivos(fs), manejar las entradas del usuario y la construcción de un CLI simple.
 
-# Ejecucion / Execute
-Puedes ejecutar el siguiente comando 
+## Ejecucion / Execute
+
+Clona el Repositorio / Clone the repo
+
+Para validar el archivo de Test hecho con Jest / To validate the Jest Test file
+Puedes ejecutar el siguiente comando / You can run the following command:
+
 ```bash 
 npm test 
+```
+
+### Agregar tarea / Add a Task in the Json File
+
+Para crear una nueva tarea utilizaremos el siguiente comando / To create new task in the Json file you can run the following command:
+
+```bash
+node index.js add "Some Task"
+```
+
+### Agregar tarea / Add a Task in the Json File
+
+Para crear una nueva tarea utilizaremos el siguiente comando / To create new task in the Json file you can run the following command:
+
+```bash
+node index.js add "Some Task"
+```
+
+### Actualizar una tarea / Update a Task in the Json File
+
+Para actualizar una tarea existente utilizaremos el siguiente comando / To update a task in the Json file you can run the following command:
+
+```bash
+node index.js update 235 "Buy milk"
+```
+
+### Eliminar una tarea / Delete a Task in the Json File
+
+Para eliminar una tarea existente utilizaremos el siguiente comando / To delete a task in the Json file you can run the following command:
+
+```bash
+node index.js delete 234
+```
+
+### Marcar una tarea en progreso o terminada / Marking a task as in progress or done in the Json File 
+
+Para actualizar el Status de una tarea existente utilizaremos el siguiente comando / To update the status to the task in the Json file you can run the following command:
+
+```bash
+node index.js mark-done 235 
+node index.js mark-in-progress 236 
+```
+
+### Listar todas las tareas / Listing all task
+
+Para listar todas las tareas usaremos el siguiente comando / To listing all task you can run the following command:
+
+```bash
+node index.js list
+```
+
+### Listar las tareas por status / Listing tasks by status
+
+Para listar por status usaremos el siguiente comando / To listing tasks by status you can run the following command:
+
+```bash
+node index.js list done
+node index.js list todo
+node index.js list in-progress
 ```
 
 ## Como Hacerlo
