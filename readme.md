@@ -8,8 +8,8 @@ Este proyecto nos ayudará a practicar nuestras habilidades de programación, in
 
 Clona el Repositorio / Clone the repo
 
-Para validar el archivo de Test hecho con Jest / To validate the Jest Test file
-Puedes ejecutar el siguiente comando / You can run the following command:
+Para validar el archivo de Test hecho con Jest Puedes ejecutar el siguiente comando :  
+To validate the Jest Test file You can run the following command:
 
 ```bash 
 npm test 

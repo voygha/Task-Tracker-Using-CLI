@@ -1540,25 +1540,18 @@
     "updatedAt": "2024-08-19T16:46:26.318Z"
   },
   {
-    "id": 224,
-    "description": "Comprar leche",
-    "status": "todo",
-    "createdAt": "2024-08-19T16:46:27.059Z",
-    "updatedAt": "2024-08-19T16:46:27.059Z"
-  },
-  {
     "id": 225,
-    "description": "Comprar leche",
-    "status": "todo",
+    "description": "225 Task Update",
+    "status": "done",
     "createdAt": "2024-08-19T16:46:27.794Z",
-    "updatedAt": "2024-08-19T16:46:27.794Z"
+    "updatedAt": "2024-08-23T19:49:17.226Z"
   },
   {
     "id": 226,
     "description": "Comprar leche",
-    "status": "todo",
+    "status": "in-progress",
     "createdAt": "2024-08-19T16:46:28.527Z",
-    "updatedAt": "2024-08-19T16:46:28.527Z"
+    "updatedAt": "2024-08-23T19:48:47.746Z"
   },
   {
     "id": 227,
@@ -1622,5 +1615,19 @@
     "status": "in-progress",
     "createdAt": "2024-08-23T18:59:58.337Z",
     "updatedAt": "2024-08-23T19:11:30.552Z"
+  },
+  {
+    "id": 237,
+    "description": "Comprar leche",
+    "status": "todo",
+    "createdAt": "2024-08-23T19:48:00.993Z",
+    "updatedAt": "2024-08-23T19:48:00.993Z"
+  },
+  {
+    "id": 238,
+    "description": "New Task",
+    "status": "todo",
+    "createdAt": "2024-08-23T19:49:30.104Z",
+    "updatedAt": "2024-08-23T19:49:30.104Z"
   }
 ]
