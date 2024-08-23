@@ -4,6 +4,12 @@
 
 Este proyecto nos ayudará a practicar nuestras habilidades de programación, incluyendo el manejo del sistema de archivos(fs), manejar las entradas del usuario y la construcción de un CLI simple.
 
+# Ejecucion / Execute
+Puedes ejecutar el siguiente comando 
+```bash 
+npm test 
+```
+
 ## Como Hacerlo
 Si quieres realizar este proyecto paso a paso, consulta el archivo `steps.md` ahi encontraras paso a paso como abordar los requisitos y limitaciones del proyecto y la logica que utilice.
 

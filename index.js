@@ -23,7 +23,9 @@ switch(command){
         updateStatus(taskId, 'done');
         break;
     case 'list':
-        listTasks(taskId);
+        //listTasks(taskId);
+        const tasks = listTasks(taskId);
+        console.log(tasks.length ? tasks : 'No hay tareas que mostrar.');
         break;
     default:
         console.log('Comando no reconocido');
