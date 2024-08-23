@@ -224,6 +224,8 @@ Para buenas practicas vamos a separar las funciones del CLI ahora tendremos 2 ar
 - index.js Aqui ira la logica del CLI
 - task.js Aqui iran las funciones CRUD de las tareas
 
+## Aclaracion: Actualizacion en archivos `Task.js` e `index.js` 
+Estos archivos fueron actualizados debido a que las funciones CRUD imprimian directamente el console.log, para mejores practicas agregue un return, pueden visitar los archivos para ver las actualizacion o en este mismo archivo debajo encontraran el codigo actualizado.
 
 ### El archivo `task.js` quedaria asi:
 
@@ -232,132 +234,139 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 // Path del archivo JSON
-const taskFilePath = path.join(__dirname,'task.json');
+const taskFilePath = path.join(__dirname, 'task.json');
 
-//Asegurarse de que el archivo JSON exista
-if( !fs.existsSync(taskFilePath)) {
+// Asegurarse de que el archivo JSON exista
+if (!fs.existsSync(taskFilePath)) {
     fs.writeFileSync(taskFilePath, JSON.stringify([]));
 }
 
-
-function loadTasks(){
+function loadTasks() {
+    // Leer el archivo JSON
     const data = fs.readFileSync(taskFilePath);
-    return JSON.parse(data);
+    return JSON.parse(data); // Parsear y devolver las tareas
 }
 
-function saveTasks(task){
-    fs.writeFileSync(taskFilePath, JSON.stringify(task,null,2));
+function saveTasks(tasks) {
+    // Guardar las tareas en el archivo JSON
+    fs.writeFileSync(taskFilePath, JSON.stringify(tasks, null, 2));
 }
 
 function addTask(description) {
-    //Cargamos el JSON
+    // Cargar las tareas existentes
     const tasks = loadTasks();
-    // Creamos el objeto que guardara una nueva tarea
+    // Crear un objeto para la nueva tarea
     const newTask = {
         id: tasks.length ? tasks[tasks.length - 1].id + 1 : 1,
         description,
         status: 'todo',
         createdAt: new Date(),
-        updatedAt: new Date()
+        updatedAt: new Date(),
     };
+    // Agregar la nueva tarea a la lista
     tasks.push(newTask);
-    //Hacemos el llamado a saveTask para guardar la tarea
+    // Guardar la lista de tareas actualizada
     saveTasks(tasks);
-    console.log(`Tarea agregada exitosamente (ID: ${newTask.id})`);
+    return `Tarea agregada exitosamente (ID: ${newTask.id})`;
 }
 
 function updateTask(id, newDescription) {
+    // Cargar las tareas existentes
     const tasks = loadTasks();
-    //busca la tarea por el id
+    // Buscar la tarea por su ID
     const task = tasks.find(task => task.id == id);
-    //si la tarea fue encontra => entonces actualiza la descripcion
+    // Si la tarea existe, actualizar la descripción
     if (task) {
         task.description = newDescription;
-        //Guarda la fecha de actualizacion
-        task.updatedAt = new Date();
-        //Guarda la tarea actualizada por el id
-        saveTasks(tasks);
-        console.log(`Tarea actualizada exitosamente (ID: ${id})`);
+        task.updatedAt = new Date(); // Actualizar la fecha de modificación
+        saveTasks(tasks); // Guardar la lista de tareas actualizada
+        return `Tarea actualizada exitosamente (ID: ${id})`;
     } else {
-        console.log(`Tarea con ID: ${id} no encontrada`);
+        return `Tarea con ID: ${id} no encontrada`;
     }
 }
 
 function deleteTask(id) {
-    //carga las entradas del JSON
+    // Cargar las tareas existentes
     let tasks = loadTasks();
-    // guarda la lista de tareas despues de ser filtradas omitiendo el id que se solicita eliminar
+    const initialLength = tasks.length;
+    // Filtrar la lista para eliminar la tarea con el ID proporcionado
     tasks = tasks.filter(task => task.id != id);
-    //Guarda en el JSON la lista actualizada omitiendo el id proporcionado en caso de que exista
-    saveTasks(tasks);
-    console.log(`Tarea eliminada exitosamente (ID: ${id})`);
+    saveTasks(tasks); // Guardar la lista de tareas actualizada
+    return tasks.length < initialLength 
+        ? `Tarea eliminada exitosamente (ID: ${id})`
+        : `Tarea con ID: ${id} no encontrada`;
 }
 
 function updateStatus(id, newStatus) {
-    //Carga las tareas del JSON
+    // Cargar las tareas existentes
     const tasks = loadTasks();
-    // busca si existe la tarea conforme al id proporcionado
+    // Buscar la tarea por su ID
     const task = tasks.find(task => task.id == id);
-    //si la tarea existe => actualiza el estado conforme al switch
+    // Si la tarea existe, actualizar el estado
     if (task) {
         task.status = newStatus;
-        task.updatedAt = new Date();
-        saveTasks(tasks);
-        console.log(`Tarea actualizada a ${newStatus} (ID: ${id})`);
+        task.updatedAt = new Date(); // Actualizar la fecha de modificación
+        saveTasks(tasks); // Guardar la lista de tareas actualizada
+        return `Tarea actualizada a ${newStatus} (ID: ${id})`;
     } else {
-        console.log(`Tarea con ID: ${id} no encontrada`);
+        return `Tarea con ID: ${id} no encontrada`;
     }
 }
 
 function listTasks(status = '') {
-    // Se lee el JSON
+    // Cargar las tareas existentes
     const tasks = loadTasks();
-    // Si hay status busca todas las tareas que coincidan con el status
-    // Si no hay status devuelve todas las tareas que se tengan guardadas en el JSON
+    // Filtrar las tareas por estado si se proporciona, o devolver todas
     const filteredTasks = status ? tasks.filter(task => task.status === status) : tasks;
-    //Si la busqueda tiene al menos 1 tarea devuelve el objeto de las tareas
-    // Si no tiene ninguna tarea, entonces => imprime mensaje de que no hay tareas 
-    // En lugar de solo imprimir, devolvemos las tareas filtradas
-    return filteredTasks.length ? filteredTasks : [];
+    return filteredTasks.length ? filteredTasks : []; // Devolver la lista filtrada o vacía
 }
 
-//exportar las funciones al index
+// Exportar las funciones para su uso en otros archivos
 module.exports = { addTask, updateTask, deleteTask, updateStatus, listTasks };
+
 ```
 
 
 ### El archivo `index.js` quedaria de la siguiente forma:
 ```javascript
-//Destructurar las funciones que vienen task.js
+// Destructurar las funciones que vienen de task.js
 const { addTask, updateTask, deleteTask, updateStatus, listTasks } = require('./task');
 
 const args = process.argv.slice(2);
 const command = args[0];
-const taskId =args[1];
+const taskId = args[1];
 const taskDescription = args.slice(1).join(' ');
 
-switch(command){
-    case 'add': 
-        addTask(taskDescription);
+switch (command) {
+    case 'add':
+        const addResult = addTask(taskDescription);
+        console.log(addResult);
         break;
     case 'update':
-        updateTask(taskId, taskDescription);
+        const updateResult = updateTask(taskId, taskDescription);
+        console.log(updateResult);
         break;
     case 'delete':
-        deleteTask(taskId);
+        const deleteResult = deleteTask(taskId);
+        console.log(deleteResult);
         break;
     case 'mark-in-progress':
-        updateStatus(taskId, 'in-progress');
+        const inProgressResult = updateStatus(taskId, 'in-progress');
+        console.log(inProgressResult);
         break;
     case 'mark-done':
-        updateStatus(taskId, 'done');
+        const doneResult = updateStatus(taskId, 'done');
+        console.log(doneResult);
         break;
     case 'list':
-        listTasks(taskId);
+        const tasks = listTasks(taskId);
+        console.log(tasks.length ? tasks : 'No hay tareas que mostrar.');
         break;
     default:
         console.log('Comando no reconocido');
 }
+
 ```
 
 ## TEST
@@ -626,3 +635,4 @@ Para revisar el test ejecuta el comando:
 ```bash
 npm run test
 ```
+
